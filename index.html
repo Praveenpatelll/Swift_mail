@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwiftMail | Instant Temporary Email Generator</title>
+    <meta name="description"
+        content="Generate instant, anonymous temporary email addresses to keep your inbox clean and secure. Free, fast, and infinite.">
+    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-bolt-lightning"></i>
+                <span>SwiftMail</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="tab-link active" data-tab="email">Email</a>
+                <a href="#" class="tab-link" data-tab="sms">Mobile Number</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero-section">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 id="hero-title">Disposable Email for a <span class="gradient-text">Cleaner Inbox</span></h1>
+                    <p id="hero-subtitle">Stop spam, stay safe. SwiftMail provides free, anonymous, and instant
+                        temporary email addresses to keep your real mailbox clean.</p>
+                </div>
+
+                <!-- Email Generator -->
+                <div id="email-generator" class="tab-section active">
+                    <div class="generator-card glass">
+                        <div class="email-display">
+                            <div class="domain-selector-wrapper">
+                                <label for="domain-select">Choose a domain:</label>
+                                <select id="domain-select" class="glass-select">
+                                    <option value="">Loading domains...</option>
+                                </select>
+                            </div>
+                            <div class="email-input-wrapper">
+                                <input type="text" id="email-address" placeholder="Enter old email or generate new..." autocomplete="off" spellcheck="false">
+                                <div class="actions">
+                                    <button id="load-email-btn" title="Open this email's inbox">
+                                        <i class="fas fa-arrow-right-to-bracket"></i>
+                                    </button>
+                                    <button id="copy-btn" title="Copy to clipboard">
+                                        <i class="far fa-copy"></i>
+                                    </button>
+                                    <button id="history-btn" title="View History">
+                                        <i class="fas fa-history"></i>
+                                    </button>
+                                    <button id="refresh-btn" title="Generate new email">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="status-indicator">
+                            <span class="pulse"></span>
+                            <span id="status-text">Waiting for emails...</span>
+                        </div>
+                        <div class="demo-actions" style="margin-top: 1rem; text-align: center;">
+                            <button id="simulate-email-otp-btn" class="btn-secondary"
+                                style="font-size: 0.9rem; padding: 8px 16px;">
+                                <i class="fas fa-magic"></i> Simulate Incoming OTP Email
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SMS Generator -->
+                <div id="sms-generator" class="tab-section">
+                    <div class="generator-card glass">
+                        <div class="sms-display">
+                            <div class="sms-row">
+                                <div class="domain-selector-wrapper">
+                                    <label for="country-select">Country:</label>
+                                    <select id="country-select" class="glass-select">
+                                        <option value="usa">United States (+1)</option>
+                                        <option value="gbr">United Kingdom (+44)</option>
+                                        <option value="ind">India (+91)</option>
+                                        <option value="fra">France (+33)</option>
+                                        <option value="deu">Germany (+49)</option>
+                                        <option value="can">Canada (+1)</option>
+                                    </select>
+                                </div>
+                                <div class="domain-selector-wrapper">
+                                    <label for="number-select">Available Numbers:</label>
+                                    <select id="number-select" class="glass-select">
+                                        <option value="">Select country first...</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="email-input-wrapper">
+                                <input type="text" id="phone-display" readonly placeholder="Pick a number to start...">
+                                <div class="actions">
+                                    <button id="copy-sms-btn" title="Copy phone number">
+                                        <i class="far fa-copy"></i>
+                                    </button>
+                                    <button id="refresh-sms-btn" title="Refresh number list">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="pulse warning"></span>
+                        <span id="sms-status-text">Demo Mode: Generated numbers are for testing UI.</span>
+                    </div>
+                    <div class="demo-actions" style="margin-top: 1rem; text-align: center;">
+                        <button id="simulate-otp-btn" class="btn-secondary"
+                            style="font-size: 0.9rem; padding: 8px 16px;">
+                            <i class="fas fa-magic"></i> Simulate Incoming OTP
+                        </button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+
+        <section class="inbox-section">
+            <div class="container">
+                <div class="inbox-container glass">
+                    <div class="inbox-header">
+                        <h2>Your Inbox</h2>
+                        <div class="inbox-actions">
+                            <span id="last-updated">Last checked: Just now</span>
+                            <button id="manual-refresh" class="btn-secondary">Check for new mails</button>
+                        </div>
+                    </div>
+
+                    <div class="inbox-content">
+                        <div id="loading-emails" class="loading-state hidden">
+                            <div class="spinner"></div>
+                            <p>Checking for messages...</p>
+                        </div>
+
+                        <div id="empty-state" class="empty-state">
+                            <div class="empty-icon">
+                                <i class="far fa-envelope-open"></i>
+                            </div>
+                            <h3>Your inbox is empty</h3>
+                            <p>Any incoming emails will appear here automatically.</p>
+                        </div>
+
+                        <div id="email-list" class="email-list hidden">
+                            <!-- Email items will be injected here -->
+                        </div>
+
+                        <div id="sms-list" class="email-list hidden">
+                            <!-- SMS items will be injected here -->
+                        </div>
+
+                        <div id="email-detail" class="email-detail hidden">
+                            <button id="back-to-list" class="back-btn">
+                                <i class="fas fa-arrow-left"></i> Back to Inbox
+                            </button>
+                            <div class="detail-content">
+                                <div class="message-meta">
+                                    <h2 id="msg-subject"></h2>
+                                    <div class="meta-row">
+                                        <div class="meta-item">
+                                            <span class="label">From:</span>
+                                            <span id="msg-from" class="value"></span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <span class="label">Time:</span>
+                                            <span id="msg-date" class="value"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="msg-body" class="message-body">
+                                    <!-- Body content -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <div class="container">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                        <h3>Private & Secure</h3>
+                        <p>No registration required. Mails are deleted permanently after usage.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-infinity"></i></div>
+                        <h3>Infinite Addresses</h3>
+                        <p>Generate as many email addresses as you need with a single click.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                        <h3>Real-time Delivery</h3>
+                        <p>Get messages instantly without long waiting times or delays.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-bolt-lightning"></i> SwiftMail
+                </div>
+                <p>&copy; 2026 SwiftMail. Built for privacy.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="history-modal" class="modal hidden">
+        <div class="modal-content glass">
+            <div class="modal-header">
+                <h3>Email History</h3>
+                <button id="close-history" class="close-btn" title="Close History" aria-label="Close History"><i
+                        class="fas fa-times"></i></button>
+            </div>
+            <div class="history-search-wrapper">
+                <input type="text" id="history-search" placeholder="Search your history..." class="glass-input">
+            </div>
+            <div id="history-list" class="history-list">
+                <!-- History items -->
+            </div>
+            <div class="history-actions">
+                <button id="restore-test-data" class="btn-secondary">Restore Test Data</button>
+                <button id="clear-history" class="btn-secondary">Clear History</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast">Address copied!</div>
+
+    <script src="script.js?v=2"></script>
+</body>
+
+</html>
