@@ -1,0 +1,5 @@
+# Netlify API Proxy for Mail.tm (Prevents CORS & AdBlocker issues on production)
+/api/mail/*  https://api.mail.tm/:splat  200!
+
+# SPA Fallback
+/*  /index.html  200

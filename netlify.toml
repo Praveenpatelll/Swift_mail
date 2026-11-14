@@ -1,0 +1,15 @@
+[build]
+  publish = "."
+
+# Netlify edge proxy to forward /api/mail to api.mail.tm (solves CORS & AdBlockers)
+[[redirects]]
+  from = "/api/mail/*"
+  to = "https://api.mail.tm/:splat"
+  status = 200
+  force = true
+
+# Fallback for routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
